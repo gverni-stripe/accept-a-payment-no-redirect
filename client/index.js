@@ -49,9 +49,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     // the server.
     const {error: stripeError} = await stripe.confirmPayment({
       elements,
-      confirmParams: {
-        return_url: `${window.location.origin}/return.html`,
-      }
+      // confirmParams: {
+      //   return_url: `${window.location.origin}/return.html`,
+      // }
+      redirect: "if_required"
     });
 
     if (stripeError) {
@@ -61,6 +62,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       submitted = false;
       form.querySelector('button').disabled = false;
       return;
+    } else {
+      // Handle succesful payment here 
+      addMessage('Payment Successful')
     }
   });
 });
